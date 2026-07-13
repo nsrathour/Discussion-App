@@ -1,0 +1,51 @@
+name: Deploy Discussion App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.2.2
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            set -e
+
+            cd /home/ec2-user/Discussion-App
+
+            echo "Pulling latest code..."
+            git pull origin main
+
+            echo "Installing backend dependencies..."
+            cd backend
+            npm install
+
+            echo "Installing frontend dependencies..."
+            cd ../client
+            npm install
+
+            echo "Building React app..."
+            npm run build
+
+            echo "Deploying frontend..."
+            sudo rm -rf /usr/share/nginx/html/*
+            sudo cp -r dist/* /usr/share/nginx/html/
+
+            echo "Restarting backend..."
+            pm2 restart discussion-backend
+
+            echo "Reloading Nginx..."
+            sudo systemctl reload nginx
+
+            echo "Deployment completed successfully!"
