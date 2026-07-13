@@ -9,7 +9,7 @@ A full-stack discussion platform inspired by Stack Overflow where users can ask 
 **Frontend:** http://13.48.44.230
 
 
-*(Replace with your domain or EC2 IP)*
+
 
 ---
 
@@ -234,7 +234,7 @@ Live Website Updated
 
 # 📸 Screenshots
 
-(Add screenshots here)
+
 
 - Home Page
 - Login
