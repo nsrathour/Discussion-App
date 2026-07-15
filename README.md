@@ -264,7 +264,7 @@ Live Website Updated
 **Navditya Singh Rathour**
 
 - GitHub: https://github.com/nsrathour
-- LinkedIn: (Add your LinkedIn)
+- LinkedIn: www.linkedin.com/in/navditya-singh-rathour-7268a7288
 
 ---
 
