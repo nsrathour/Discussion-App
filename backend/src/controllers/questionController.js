@@ -95,23 +95,13 @@ export const createQuestion = async (req, res) => {
 
 export const getAllQuestions = async (req, res) => {
     try {
-        const page = parseInt(req.query.page) || 1;
-        const limit = parseInt(req.query.limit) || 10;
-        const skip = (page - 1) * limit;
-
-        const totalQuestions = await Question.countDocuments();
-
         const questions = await Question.find()
             .populate("userId", "name email")
-            .sort({ createdAt: -1 })
-            .skip(skip)
-            .limit(limit);
+            .sort({ createdAt: -1 });
 
         res.status(200).json({
             success: true,
-            currentPage: page,
-            totalPages: Math.ceil(totalQuestions / limit),
-            totalQuestions,
+            count: questions.length,
             questions,
         });
     } catch (error) {
