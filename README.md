@@ -1,62 +1,40 @@
 # 🚀 Discussion App
 
-A full-stack discussion platform inspired by Stack Overflow where users can ask questions, post answers, upvote questions, and manage discussions. The application is deployed on AWS EC2 with automated CI/CD using GitHub Actions.
+A full-stack discussion platform inspired by Stack Overflow where users can ask questions, post answers, upvote content, and manage discussions.
 
----
-
-## 🌐 Live Demo
-
-**Frontend:** http://13.48.44.230
-
-
-
+### 🔗 Live Demo
+Frontend: http://13.48.44.230
 
 ---
 
 ## ✨ Features
 
-### User Authentication
-- Register and Login using JWT Authentication
-- Secure protected routes
-- User profile support
-
-### Questions
-- Ask new questions
-- View all questions
-- Search questions
-- View question details
-- Edit/Delete your own questions
-- Track question views
-- Upvote questions
-
-### Answers
-- Add answers
-- Edit/Delete your answers
-- Mark accepted answers
-- Answers sorted by accepted status
-
-### UI
-- Responsive design
-- Modern React UI
-- Tailwind CSS styling
+- 🔐 JWT Authentication
+- ❓ Ask, edit and delete questions
+- 💬 Add, edit and delete answers
+- 👍 Upvote questions
+- ✅ Mark accepted answers
+- 🔍 Search questions
+- 👤 User profiles
+- 📱 Responsive UI
 
 ---
 
-# 🛠 Tech Stack
+## 🛠 Tech Stack
 
 ### Frontend
 - React
 - Vite
-- React Router DOM
-- Axios
 - Tailwind CSS
+- Axios
+- React Router DOM
 
 ### Backend
 - Node.js
 - Express.js
-- JWT Authentication
 - MongoDB Atlas
 - Mongoose
+- JWT Authentication
 
 ### Deployment
 - AWS EC2
@@ -66,208 +44,126 @@ A full-stack discussion platform inspired by Stack Overflow where users can ask 
 
 ---
 
-# 📁 Project Structure
+## 📂 Project Structure
 
 ```
 Discussion-App
-│
 ├── backend
-│   ├── src
-│   │   ├── config
-│   │   ├── controllers
-│   │   ├── middleware
-│   │   ├── models
-│   │   ├── routes
-│   │   └── utils
-│   │
-│   └── package.json
+│   ├── controllers
+│   ├── middleware
+│   ├── models
+│   ├── routes
+│   └── config
 │
 ├── client
-│   ├── src
-│   │   ├── components
-│   │   ├── context
-│   │   ├── pages
-│   │   ├── services
-│   │   └── utils
-│   │
-│   └── package.json
+│   ├── components
+│   ├── pages
+│   ├── context
+│   └── services
 │
-└── .github
-    └── workflows
-        └── deploy.yml
+└── .github/workflows
 ```
 
 ---
 
-# ⚙️ Installation
+## ⚙️ Getting Started
 
-## Clone Repository
+### Clone the repository
 
 ```bash
 git clone https://github.com/nsrathour/Discussion-App.git
-
 cd Discussion-App
 ```
 
----
-
-## Backend
+### Backend
 
 ```bash
 cd backend
-
 npm install
 ```
 
-Create `.env`
+Create a `.env` file:
 
 ```env
 PORT=5000
-
-MONGO_URI=YOUR_MONGODB_URI
-
-JWT_SECRET=YOUR_SECRET
+MONGO_URI=your_mongodb_uri
+JWT_SECRET=your_secret
 ```
 
-Run
+Run:
 
 ```bash
 npm start
 ```
 
----
-
-## Frontend
+### Frontend
 
 ```bash
 cd client
-
 npm install
-
 npm run dev
 ```
 
 ---
 
-# 🚀 Deployment Architecture
+## 🚀 Deployment
+
+The application is deployed on **AWS EC2**.
+
+- Nginx serves the React application
+- PM2 manages the Node.js backend
+- MongoDB Atlas stores data
+- GitHub Actions automates deployment
+
+### CI/CD Flow
 
 ```
-                    Internet
-                        │
-                        ▼
-                   GitHub Repository
-                        │
-                 GitHub Actions
-                        │
-                    SSH Deploy
-                        │
-                        ▼
-                 AWS EC2 Instance
-                        │
-        ┌───────────────┴───────────────┐
-        │                               │
-        ▼                               ▼
-     Nginx                        PM2 (Node.js)
-        │                               │
-        ▼                               ▼
- React Production Build          Express Backend
-        │                               │
-        └───────────────┬───────────────┘
-                        ▼
-                 MongoDB Atlas
-```
-
----
-
-# 🔄 CI/CD Pipeline
-
-Every push to the `main` branch automatically:
-
-- Pulls latest code
-- Installs backend dependencies
-- Installs frontend dependencies
-- Builds React application
-- Deploys frontend to Nginx
-- Restarts backend using PM2
-- Reloads Nginx
-
-Workflow:
-
-```
-Developer
-    │
-git push
-    │
-    ▼
-GitHub Repository
-    │
+Git Push
+   ↓
 GitHub Actions
-    │
-SSH
-    ▼
-AWS EC2
-    │
-git pull
-    │
-npm install
-    │
-npm run build
-    │
+   ↓
+SSH to EC2
+   ↓
+Pull Latest Code
+   ↓
+Install Dependencies
+   ↓
+Build React App
+   ↓
 Restart PM2
-    │
-Reload Nginx
-    │
+   ↓
 Live Website Updated
 ```
 
 ---
 
-# 🔐 Security
+## 🔒 Security
 
 - JWT Authentication
-- Protected API Routes
+- Protected Routes
 - Environment Variables
-- MongoDB Atlas
 - Nginx Reverse Proxy
 
 ---
 
-# 📸 Screenshots
-
-
-
-- Home Page
-- Login
-- Ask Question
-- Question Details
-- Profile
-
----
-
-# 📌 Future Improvements
+## 🚀 Future Improvements
 
 - Email Verification
 - Forgot Password
 - Notifications
-- Tags & Categories
-- User Reputation
-- Docker
+- Docker Support
 - HTTPS
 - Unit Testing
-- GitHub Actions Testing
-- Kubernetes Deployment
 
 ---
 
-# 👨‍💻 Author
+## 👨‍💻 Author
 
 **Navditya Singh Rathour**
 
 - GitHub: https://github.com/nsrathour
-- LinkedIn: www.linkedin.com/in/navditya-singh-rathour-7268a7288
+- LinkedIn: https://www.linkedin.com/in/navditya-singh-rathour-7268a7288
 
 ---
 
-# ⭐ If you like this project
-
-Give this repository a ⭐ on GitHub.
+⭐ If you found this project helpful, consider giving it a star.
