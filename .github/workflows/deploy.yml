@@ -7,45 +7,76 @@ on:
 
 jobs:
   deploy:
+
     runs-on: ubuntu-latest
 
     steps:
+
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+
+      # Build Docker Image
+      - name: Build Docker Image
+        run: |
+          docker build -t navditya/discussion-backend:latest ./backend
+
+
+      # Login Docker Hub
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+
+      # Push Image
+      - name: Push Docker Image
+        run: |
+          docker push navditya/discussion-backend:latest
+
+
+      # Deploy on EC2
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v1.2.2
+
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
+
           script: |
+
             set -e
 
-            cd /home/ec2-user/Discussion-App
+            echo "Pulling latest Docker image..."
 
-            echo "Pulling latest code..."
-            git pull origin main
+            docker pull navditya/discussion-backend:latest
 
-            echo "Installing backend dependencies..."
-            cd backend
-            npm install
 
-            echo "Installing frontend dependencies..."
-            cd ../client
-            npm install
+            echo "Stopping old container..."
 
-            echo "Building React app..."
-            npm run build
+            docker stop discussion-container || true
 
-            echo "Deploying frontend..."
-            sudo rm -rf /usr/share/nginx/html/*
-            sudo cp -r dist/* /usr/share/nginx/html/
 
-            echo "Restarting backend..."
-            pm2 restart discussion-backend
+            echo "Removing old container..."
+
+            docker rm discussion-container || true
+
+
+            echo "Starting new container..."
+
+            docker run -d \
+            --restart always \
+            --name discussion-container \
+            --env-file /home/ec2-user/Discussion-App/backend/.env \
+            -p 5000:5000 \
+            navditya/discussion-backend:latest
+
 
             echo "Reloading Nginx..."
+
             sudo systemctl reload nginx
+
 
             echo "Deployment completed successfully!"
