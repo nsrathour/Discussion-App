@@ -1,6 +1,6 @@
 # 🚀 Discussion App
 
-A full-stack discussion platform inspired by Stack Overflow where users can ask questions, post answers, upvote content, and manage discussions.
+A full-stack discussion platform inspired by Stack Overflow where users can ask questions, post answers, upvote content, and manage discussions. The application is containerized using Docker and deployed on AWS EC2 with automated CI/CD using GitHub Actions.
 
 ### 🔗 Live Demo
 Frontend: http://13.48.44.230
@@ -15,7 +15,7 @@ Frontend: http://13.48.44.230
 - 👍 Upvote questions
 - ✅ Mark accepted answers
 - 🔍 Search questions
-- 👤 User profiles
+- 👤 User authentication and profile support
 - 📱 Responsive UI
 
 ---
@@ -36,17 +36,18 @@ Frontend: http://13.48.44.230
 - Mongoose
 - JWT Authentication
 
-### Deployment
+### DevOps & Deployment
+- Docker
+- Docker Compose
 - AWS EC2
 - Nginx
-- PM2
 - GitHub Actions (CI/CD)
 
 ---
 
 ## 📂 Project Structure
 
-```
+```text
 Discussion-App
 ├── backend
 │   ├── controllers
@@ -57,32 +58,32 @@ Discussion-App
 │
 ├── client
 │   ├── components
-│   ├── pages
 │   ├── context
+│   ├── pages
 │   └── services
 │
-└── .github/workflows
+├── docker-compose.yml
+├── Dockerfile
+│
+└── .github
+    └── workflows
 ```
 
 ---
 
 ## ⚙️ Getting Started
 
-### Clone the repository
+### Clone Repository
 
 ```bash
 git clone https://github.com/nsrathour/Discussion-App.git
+
 cd Discussion-App
 ```
 
-### Backend
+### Environment Variables
 
-```bash
-cd backend
-npm install
-```
-
-Create a `.env` file:
+Create a `.env` file inside the backend folder.
 
 ```env
 PORT=5000
@@ -90,13 +91,17 @@ MONGO_URI=your_mongodb_uri
 JWT_SECRET=your_secret
 ```
 
-Run:
+### Run Locally
+
+#### Backend
 
 ```bash
+cd backend
+npm install
 npm start
 ```
 
-### Frontend
+#### Frontend
 
 ```bash
 cd client
@@ -106,33 +111,46 @@ npm run dev
 
 ---
 
+## 🐳 Run with Docker
+
+```bash
+docker compose up --build
+```
+
+To stop containers:
+
+```bash
+docker compose down
+```
+
+---
+
 ## 🚀 Deployment
 
-The application is deployed on **AWS EC2**.
+The application is deployed on **AWS EC2** using **Docker** and **Nginx**.
 
-- Nginx serves the React application
-- PM2 manages the Node.js backend
-- MongoDB Atlas stores data
-- GitHub Actions automates deployment
+- Docker containers run the frontend and backend.
+- Nginx acts as a reverse proxy.
+- MongoDB Atlas stores application data.
+- GitHub Actions automatically deploys every push to the `main` branch.
 
 ### CI/CD Flow
 
-```
-Git Push
-   ↓
+```text
+Developer
+   │
+git push
+   │
+   ▼
 GitHub Actions
-   ↓
-SSH to EC2
-   ↓
-Pull Latest Code
-   ↓
-Install Dependencies
-   ↓
-Build React App
-   ↓
-Restart PM2
-   ↓
-Live Website Updated
+   │
+SSH into EC2
+   │
+git pull
+   │
+docker compose up --build -d
+   │
+Application Updated
 ```
 
 ---
@@ -140,8 +158,9 @@ Live Website Updated
 ## 🔒 Security
 
 - JWT Authentication
-- Protected Routes
+- Protected API Routes
 - Environment Variables
+- MongoDB Atlas
 - Nginx Reverse Proxy
 
 ---
@@ -151,9 +170,9 @@ Live Website Updated
 - Email Verification
 - Forgot Password
 - Notifications
-- Docker Support
-- HTTPS
-- Unit Testing
+- Kubernetes Deployment
+- HTTPS (SSL)
+- Unit & Integration Testing
 
 ---
 
@@ -166,4 +185,4 @@ Live Website Updated
 
 ---
 
-⭐ If you found this project helpful, consider giving it a star.
+⭐ If you found this project useful, consider giving it a star.
